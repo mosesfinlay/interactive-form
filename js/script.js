@@ -344,21 +344,22 @@ function validActivity(e) {
   }
 }
 
-const selectedPaymentType = $("#payment option:selected").val().toLowerCase();
+let selectedPaymentType = $("#payment option:selected").val().toLowerCase();
+$("#payment").on("change", function() {
+  selectedPaymentType = $("#payment option:selected").val().toLowerCase();
+});
 
 // Validates the the credit card number
 function validCreditCard(realTime, e) {
   const creditCardNumber = $("#cc-num").val();
 
-  if (selectedPaymentType === "credit card") {
-    if (!/^\d{13,16}$/.test(creditCardNumber)) {
-      if (!realTime) {
-        e.preventDefault();
-      }
-      error(true, needsValidation["creditCard"], validationMessages["creditCard"]);
-    } else {
-      error(false, needsValidation["creditCard"], validationMessages["creditCard"]);
+  if (!/^\d{13,16}$/.test(creditCardNumber)) {
+    if (!realTime) {
+      e.preventDefault();
     }
+    error(true, needsValidation["creditCard"], validationMessages["creditCard"]);
+  } else {
+    error(false, needsValidation["creditCard"], validationMessages["creditCard"]);
   }
 }
 
@@ -366,16 +367,13 @@ function validCreditCard(realTime, e) {
 function validZip(realTime, e) {
   const zipCode = $("#zip").val();
 
-  if (selectedPaymentType === "credit card") {
-    // Validates the the zip code
-    if (!/^\d{5}$/.test(zipCode)) {
-      if (!realTime) {
-        e.preventDefault();
-      }
-      error(true, needsValidation["zip"], validationMessages["zip"]);
-    } else {
-      error(false, needsValidation["zip"], validationMessages["zip"]);
+  if (!/^\d{5}$/.test(zipCode)) {
+    if (!realTime) {
+      e.preventDefault();
     }
+    error(true, needsValidation["zip"], validationMessages["zip"]);
+  } else {
+    error(false, needsValidation["zip"], validationMessages["zip"]);
   }
 }
 
@@ -383,16 +381,13 @@ function validZip(realTime, e) {
 function validCVV(realTime, e) {
   const cvv = $("#cvv").val();
 
-  if (selectedPaymentType === "credit card") {
-    // Validates the the cvv
-    if (!/^\d{3}$/.test(cvv)) {
-      if (!realTime) {
-        e.preventDefault();
-      }
-      error(true, needsValidation["cvv"], validationMessages["cvv"]);
-    } else {
-      error(false, needsValidation["cvv"], validationMessages["cvv"]);
+  if (!/^\d{3}$/.test(cvv)) {
+    if (!realTime) {
+      e.preventDefault();
     }
+    error(true, needsValidation["cvv"], validationMessages["cvv"]);
+  } else {
+    error(false, needsValidation["cvv"], validationMessages["cvv"]);
   }
 }
 
@@ -404,25 +399,30 @@ $("#name").on("keyup", function() {
 $("#mail").on("keyup", function() {
   validEmail(true);
 });
-// Real time validation for the credit card input
-$("#cc-num").on("keyup", function() {
-  validCreditCard(true);
-});
-// Real time validation for the credit card input
-$("#zip").on("keyup", function() {
-  validZip(true);
-});
-// Real time validation for the credit card input
-$("#cvv").on("keyup", function() {
-  validCVV(true);
-});
+
+if (selectedPaymentType === "credit card") {
+  // Real time validation for the credit card input
+  $("#cc-num").on("keyup", function() {
+    validCreditCard(true);
+  });
+  // Real time validation for the credit card input
+  $("#zip").on("keyup", function() {
+    validZip(true);
+  });
+  // Real time validation for the credit card input
+  $("#cvv").on("keyup", function() {
+    validCVV(true);
+  });
+}
 
 // Event triggered when the form is submitted
 $("form").on("submit", function(e) {
   validName(false, e);
   validEmail(false, e);
   validActivity(e);
-  validCreditCard(false, e);
-  validZip(false, e);
-  validCVV(false, e);
+  if (selectedPaymentType === "credit card") {
+    validCreditCard(false, e);
+    validZip(false, e);
+    validCVV(false, e);
+  }
 });
