@@ -1,2 +1,4 @@
-# techdegree-project-3
-My third Techdegree project
+# Techdegree Project Three
+## Build an Interactive Form
+
+This project is a form that uses Javascript to make it interactive and to validate it.
