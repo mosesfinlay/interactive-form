@@ -301,7 +301,7 @@ function validName(realTime, e) {
   const name = $("#name").val();
 
   // Checks the name to make sure it is valid
-  if (name.length >= 1 && name.length <= 1) {
+  if (name.length <= 1) {
     if (!realTime) {
       e.preventDefault();
     }
@@ -413,7 +413,7 @@ $("#zip").on("keyup", function() {
   validZip(true);
 });
 // Real time validation for the credit card input
-$("#cVV").on("keyup", function() {
+$("#cvv").on("keyup", function() {
   validCVV(true);
 });
 
@@ -422,5 +422,7 @@ $("form").on("submit", function(e) {
   validName(false, e);
   validEmail(false, e);
   validActivity(e);
-  validPayment(e);
+  validCreditCard(false, e);
+  validZip(false, e);
+  validCVV(false, e);
 });
