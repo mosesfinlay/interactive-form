@@ -46,6 +46,7 @@ const tShirtColors = [
 ];
 
 // Hides the color option
+$("#color").prev().hide();
 $("#color").hide();
 $("#color option").remove();
 //$("#color").append(`<option value="select" selected>&lt;-- Please select a T-shirt theme</option>`);
@@ -55,11 +56,13 @@ $("#design").on("change", function() {
   const $currentDesign = $("#design option:selected").val().toLowerCase();
 
   // Shows the color option
+  $("#color").prev().show();
   $("#color").show();
   $("#color option").remove();
 
   // Show the correct t-shirt colors based on the design chosen
   if ($currentDesign === "select") {
+    $("#color").prev().hide();
     $("#color").hide();
     //$("#color").append(tShirtColors[1]);
   } else if ($currentDesign === "js puns") {
