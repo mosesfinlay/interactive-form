@@ -324,7 +324,7 @@ function validEmail(realTime, e) {
       e.preventDefault();
     }
     error(true, needsValidation["email"], validationMessages["email"]["empty"]);
-  } else if (!/^\w{1,100}[@]\w{1,100}[.]com$/.test(email)) {
+  } else if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
     if (!realTime) {
       e.preventDefault();
     }
