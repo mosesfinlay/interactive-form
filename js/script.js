@@ -304,7 +304,7 @@ function validName(realTime, e) {
   const name = $("#name").val();
 
   // Checks the name to make sure it is valid
-  if (name.length <= 1) {
+  if (name.trim().length <= 1) {
     if (!realTime) {
       e.preventDefault();
     }
@@ -324,7 +324,7 @@ function validEmail(realTime, e) {
       e.preventDefault();
     }
     error(true, needsValidation["email"], validationMessages["email"]["empty"]);
-  } else if (!/^\w{1,100}[@]\w{1,100}[.][a-z]{1,100}$/.test(email)) {
+  } else if (!/^\w{1,100}[@]\w{1,100}[.]com$/.test(email)) {
     if (!realTime) {
       e.preventDefault();
     }
